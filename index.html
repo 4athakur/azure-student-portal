@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Azure Student Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{ margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+    body{
+      min-height:100vh;
+      background: linear-gradient(135deg,#0f172a,#1e3a8a,#2563eb);
+      display:flex; justify-content:center; align-items:center; overflow-x:hidden;
+    }
+    .background-blur{
+      position:absolute; width:500px; height:500px; background:rgba(255,255,255,0.08);
+      border-radius:50%; filter:blur(100px); top:-100px; right:-100px; z-index: -1;
+    }
+    .container{
+      width:100%; max-width:420px; background:rgba(255,255,255,0.08);
+      border:1px solid rgba(255,255,255,0.15); backdrop-filter:blur(15px);
+      border-radius:25px; padding:40px; box-shadow: 0 10px 40px rgba(0,0,0,0.35);
+      animation:fadeIn 1s ease; margin: 20px;
+    }
+    @keyframes fadeIn{ from{ opacity:0; transform:translateY(20px); } to{ opacity:1; transform:translateY(0); } }
+    .logo{
+      width:70px; height:70px; margin:0 auto 15px; border-radius:20px;
+      background:rgba(255,255,255,0.12); display:flex; justify-content:center;
+      align-items:center; font-size:30px; color:white;
+    }
+    h1{ text-align:center; color:white; font-size:28px; font-weight:600; margin-bottom:5px; }
+    .subtitle{ text-align:center; color:rgba(255,255,255,0.75); font-size:14px; margin-bottom:35px; }
+    .input-group{ margin-bottom:20px; position:relative; }
+    .input-group label{ color:white; font-size:14px; margin-bottom:8px; display:block; font-weight:500; }
+    .input-group input{
+      width:100%; padding:15px 18px; outline:none; border-radius:14px;
+      background:rgba(255,255,255,0.12); color:white; font-size:15px;
+      transition:0.3s; border:1px solid transparent;
+    }
+    .input-group input:focus{
+      border:1px solid #60a5fa; transform:translateY(-2px);
+      box-shadow:0 10px 25px rgba(96,165,250,0.25);
+    }
+    .submit-btn{
+      width:100%; padding:15px; border:none; border-radius:14px;
+      background:linear-gradient(90deg,#2563eb,#3b82f6); color:white;
+      font-size:16px; font-weight:600; cursor:pointer; transition:0.35s;
+      box-shadow:0 10px 25px rgba(37,99,235,0.35); margin-top: 10px;
+    }
+    .submit-btn:hover{ transform:translateY(-3px) scale(1.02); }
+    .status{ margin-top:18px; text-align:center; color:#93c5fd; font-size:14px; min-height: 20px;}
+    .footer{ margin-top:25px; text-align:center; color:rgba(255,255,255,0.6); font-size:11px; }
+  </style>
+</head>
+<body>
+  <div class="background-blur"></div>
+  <div class="container">
+    <div class="logo">☁</div>
+    <h1>Azure Student Portal</h1>
+    <p class="subtitle">Cloud Based Student Submission System</p>
+
+    <form id="studentForm">
+      <div class="input-group">
+        <label>Email Address</label>
+        <input type="email" id="email" placeholder="Enter your email" required />
+      </div>
+
+      <div class="input-group">
+        <label>Scholar Number</label>
+        <input type="text" id="scholarNumber" placeholder="e.g. 211105001" required />
+      </div>
+
+      <div class="input-group">
+        <label>CGPA</label>
+        <input type="number" step="0.01" min="0" max="10" id="cgpa" placeholder="Enter your CGPA" required />
+      </div>
+
+      <button class="submit-btn" type="submit">Submit Data</button>
+    </form>
+
+    <div class="status" id="status"></div>
+    <div class="footer">Powered by Azure Static Web Apps & Google Cloud</div>
+  </div>
+
+  <script>
+    document.getElementById("studentForm").addEventListener("submit", async function(e){
+      e.preventDefault();
+      const status = document.getElementById("status");
+      status.innerHTML = "⌛ Submitting to Cloud...";
+
+      const data = {
+        email: document.getElementById("email").value,
+        scholarNumber: document.getElementById("scholarNumber").value,
+        cgpa: document.getElementById("cgpa").value
+      };
+
+      try {
+        // YAHAN APNA GOOGLE SCRIPT URL PASTE KAREIN
+        const scriptURL = "https://script.google.com/macros/s/AKfycbwFltJU3-_Dyy2yZuizgy3NGFv4YJEU2AikCouXz_4aOAHZ6Fx0RW0_Ffp3-fe7-1AI/exec";
+
+        await fetch(scriptURL, {
+          method: "POST",
+          mode: "no-cors", 
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+
+        status.innerHTML = "✅ Data Saved to Google Sheets!";
+        status.style.color = "#4ade80";
+        document.getElementById("studentForm").reset();
+      } catch(error) {
+        status.innerHTML = "❌ Submission Failed. Try again.";
+        status.style.color = "#f87171";
+        console.error(error);
+      }
+    });
+  </script>
+</body>
+</html>
