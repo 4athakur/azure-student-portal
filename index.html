@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Records - IIIT Bhopal</title>
+  <title>Mentor Allocation Portal - IIIT Bhopal</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,6 +24,7 @@
       --error-color: #b71c1c;
       --error-bg: #ffebee;
       --border-color: #cfd8dc;
+      --readonly-bg: #f8fafc;
     }
 
     * { 
@@ -118,6 +119,19 @@
       font-size: 16px;
     }
 
+    /* Section Subheadings */
+    .section-title {
+      grid-column: span 2;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--primary-color);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 10px;
+      border-bottom: 1px dashed var(--border-color);
+      padding-bottom: 6px;
+    }
+
     /* Professional Multi-Column Grid Form */
     .form-grid {
       display: grid;
@@ -159,6 +173,24 @@
       border-color: var(--secondary-color); 
       box-shadow: 0 0 0 3px rgba(50, 140, 193, 0.15);
       background-color: #fff;
+    }
+
+    /* Professional Read-Only Box Styles */
+    .input-group input[readonly] {
+      background-color: var(--readonly-bg);
+      color: var(--text-muted);
+      border-color: #e2e8f0;
+      cursor: not-allowed;
+      font-weight: 500;
+    }
+
+    /* Highlighted Academic Information Box */
+    .score-highlight input[readonly] {
+      background-color: #fffbeb;
+      border: 1.5px solid var(--accent-color);
+      color: #92400e;
+      font-weight: 700;
+      font-size: 16px;
     }
 
     /* Accessible Visual Validation States */
@@ -266,7 +298,7 @@
         grid-template-columns: 1fr;
         gap: 18px;
       }
-      .full-width, .submit-btn {
+      .full-width, .submit-btn, .section-title {
         grid-column: span 1;
       }
       .container {
@@ -288,18 +320,20 @@
 
   <header class="uni-header">
     <div class="uni-logo-placeholder">IIIT Bhopal</div>
-    <h1 class="uni-title">Academic Records Portal</h1>
-    <p class="uni-subtitle">Result CGPA Data</p>
+    <h1 class="uni-title">Mentor Allocation Portal</h1>
+    <p class="uni-subtitle">MCA Mentor Preference Submission</p>
   </header>
 
   <main class="container">
     <div class="notice-box" role="note">
-      Students are requested to submit their latest academic details. Ensure all information entered is accurate.
+      <strong>Mentor Allocation Guidelines:</strong> Please choose your mentor preferences with care. Ensure your unique group metrics match official department releases. Your choice rankings cannot have duplicates.
     </div>
 
     <form id="studentForm" novalidate>
       <div class="form-grid">
         
+        <h2 class="section-title">Academic Details</h2>
+
         <div class="input-group full-width">
           <label for="fullName">Full Name</label>
           <input type="text" id="fullName" placeholder="Enter your full name as per official records" required autocomplete="name" />
@@ -332,12 +366,66 @@
           </select>
         </div>
 
-        <div class="input-group full-width">
-          <label for="cgpa">Current Cumulative Grade Point Average (CGPA)</label>
-          <input type="number" step="0.01" min="0" max="10" id="cgpa" placeholder="0.00 - 10.00" required />
+        <h2 class="section-title">Group Information</h2>
+
+        <div class="input-group">
+          <label for="groupNumber">Group Number</label>
+          <select id="groupNumber" required>
+            <option value="" disabled selected>Select Group</option>
+            <option value="1">Group 1</option>
+            <option value="2">Group 2</option>
+            <option value="3">Group 3</option>
+            <option value="4">Group 4</option>
+            <option value="5">Group 5</option>
+            <option value="6">Group 6</option>
+            <option value="7">Group 7</option>
+            <option value="8">Group 8</option>
+            <option value="9">Group 9</option>
+            <option value="10">Group 10</option>
+            <option value="11">Group 11</option>
+            <option value="12">Group 12</option>
+            <option value="13">Group 13</option>
+            <option value="14">Group 14</option>
+            <option value="15">Group 15</option>
+            <option value="16">Group 16</option>
+            <option value="17">Group 17</option>
+          </select>
         </div>
 
-        <button class="submit-btn" type="submit" id="submitBtn">Submit Data for Verification</button>
+        <div class="input-group">
+          <label for="groupName">Group Name</label>
+          <input type="text" id="groupName" value="" readonly placeholder="Auto-filled on selection" required />
+        </div>
+
+        <div class="input-group full-width score-highlight">
+          <label for="mentorSelectionScore">Mentor Selection Score</label>
+          <input type="text" id="mentorSelectionScore" value="" readonly placeholder="Calculated score display" required />
+        </div>
+
+        <h2 class="section-title">Mentor Preference Rankings</h2>
+
+        <div class="input-group full-width">
+          <label for="preferredMentor1">Preferred Mentor 1 (Highest Priority)</label>
+          <select id="preferredMentor1" class="mentor-select" required>
+            <option value="" disabled selected>Select Option 1</option>
+          </select>
+        </div>
+
+        <div class="input-group full-width">
+          <label for="preferredMentor2">Preferred Mentor 2</label>
+          <select id="preferredMentor2" class="mentor-select" required>
+            <option value="" disabled selected>Select Option 2</option>
+          </select>
+        </div>
+
+        <div class="input-group full-width">
+          <label for="preferredMentor3">Preferred Mentor 3</label>
+          <select id="preferredMentor3" class="mentor-select" required>
+            <option value="" disabled selected>Select Option 3</option>
+          </select>
+        </div>
+
+        <button class="submit-btn" type="submit" id="submitBtn">Submit Mentor Preferences</button>
       </div>
     </form>
 
@@ -351,6 +439,79 @@
   </footer>
 
   <script>
+    // Configuration Maps for Institutional Values
+    const baseScores = {
+      "1": 4.2525, "2": 8.545, "3": 8.0525, "4": 7.585, "5": 6.265,
+      "6": 6.945, "7": 7.8275, "8": 7.5575, "9": 5.485, "10": 7.6825,
+      "11": 5.9975, "12": 8.2525, "13": 7.8375, "14": 6.61, "15": 6.26,
+      "16": 5.275, "17": 6.4475
+    };
+
+    const mentorList = [
+      "Dr. Subhrajyoti Deb",
+      "Dr. Nikhil Kumar Singh",
+      "Dr. Gaurav Khanna",
+      "Dr. Rekha Kaushik",
+      "Dr. Shalini Stalin",
+      "Dr. Dharmendra Dangi",
+      "Dr. Supriya Aggarwal",
+      "Dr. Pallavi Athe",
+      "Mr. Aditya Tiwari"
+    ];
+
+    // Node selectors
+    const groupSelect = document.getElementById("groupNumber");
+    const groupNameInput = document.getElementById("groupName");
+    const selectionScoreInput = document.getElementById("mentorSelectionScore");
+    const mentorDropdowns = document.querySelectorAll(".mentor-select");
+
+    // Process Group selections to dynamically populate associated values
+    groupSelect.addEventListener("change", function() {
+      const selectedGroup = this.value;
+      if (selectedGroup) {
+        groupNameInput.value = `MCA_GRP_${selectedGroup.padStart(2, '0')}`;
+        selectionScoreInput.value = baseScores[selectedGroup] || "0.00";
+      } else {
+        groupNameInput.value = "";
+        selectionScoreInput.value = "";
+      }
+    });
+
+    // Populate drop-down structural nodes dynamically with filtration
+    function populateMentorDropdowns() {
+      // Step 1: Capture what is currently chosen across all lists
+      const currentSelections = Array.from(mentorDropdowns).map(dropdown => dropdown.value);
+
+      mentorDropdowns.forEach((dropdown) => {
+        const savedValue = dropdown.value; // Store target option to persist selection states
+        
+        // Clear all except initial system placeholder string
+        dropdown.innerHTML = `<option value="" disabled ${!savedValue ? 'selected' : ''}>Select Option</option>`;
+
+        mentorList.forEach((mentor) => {
+          // Add mentor option if it's not chosen in other dropdowns, OR if it's the one currently selected in this specific dropdown
+          if (!currentSelections.includes(mentor) || mentor === savedValue) {
+            const option = document.createElement("option");
+            option.value = mentor;
+            option.textContent = mentor;
+            if (mentor === savedValue) {
+              option.selected = true;
+            }
+            dropdown.appendChild(option);
+          }
+        });
+      });
+    }
+
+    // Attach mutative tracking loops on selections change
+    mentorDropdowns.forEach(dropdown => {
+      dropdown.addEventListener("change", populateMentorDropdowns);
+    });
+
+    // Run baseline execution initialization setup
+    populateMentorDropdowns();
+
+    // Standard structural submission handling script operations
     document.getElementById("studentForm").addEventListener("submit", async function(e){
       e.preventDefault();
       
@@ -358,7 +519,17 @@
       const status = document.getElementById("status");
       const submitBtn = document.getElementById("submitBtn");
 
-      // Baseline Validation check before allowing submissions
+      // Verify unique selections directly via client array comparisons
+      const currentChoices = Array.from(mentorDropdowns).map(d => d.value).filter(val => val !== "");
+      const uniqueChoices = new Set(currentChoices);
+
+      if (currentChoices.length < 3 || uniqueChoices.size !== currentChoices.length) {
+        status.className = "status error";
+        status.innerHTML = "❌ Please ensure you have selected three completely unique options across your mentor preference priority layout.";
+        return;
+      }
+
+      // Baseline Verification check before allowing submissions
       if (!form.checkValidity()) {
         status.className = "status error";
         status.innerHTML = "❌ Please correct the highlighted errors and fill out all fields accurately before submitting.";
@@ -368,7 +539,7 @@
 
       // Setting UI elements to Loading State
       status.className = "status loading";
-      status.innerHTML = `<span class="spinner"></span> Verifying and Submitting Academic Data...`;
+      status.innerHTML = `<span class="spinner"></span> Registering and Processing Mentor Preferences...`;
       submitBtn.disabled = true;
 
       // Extract values exactly mapping runtime object elements
@@ -378,12 +549,17 @@
         email: document.getElementById("email").value.trim(),
         branch: document.getElementById("branch").value,
         semester: document.getElementById("semester").value,
-        cgpa: document.getElementById("cgpa").value
+        groupNumber: document.getElementById("groupNumber").value,
+        groupName: document.getElementById("groupName").value,
+        mentorSelectionScore: document.getElementById("mentorSelectionScore").value,
+        preferredMentor1: document.getElementById("preferredMentor1").value,
+        preferredMentor2: document.getElementById("preferredMentor2").value,
+        preferredMentor3: document.getElementById("preferredMentor3").value
       };
 
       try {
         // App Script Endpoint Connection Remains Unchanged
-        const scriptURL = "https://script.google.com/macros/s/AKfycby5PIXUokswnJufr0wxRhjxXg_6M1LK5zW3umLb4HP3tdavF4cE8n9CO9Ltla-a4KU0/exec";
+        const scriptURL = "https://script.google.com/macros/s/AKfycbz9FSVU_2yYFZAqU9fGqIZ49zqIGqZH_Cfu0QYIBV1Uoeti9Qoz393iOIvU4kCENccT/exec";
 
         await fetch(scriptURL, {
           method: "POST",
@@ -394,8 +570,9 @@
 
         // Clear Form fields and post institutional Success Status
         status.className = "status success";
-        status.innerHTML = "● Academic details submitted successfully. Your record has been received for verification.";
+        status.innerHTML = "● Mentor preferences submitted successfully. Your choices have been recorded for mentor allocation processing.";
         form.reset();
+        populateMentorDropdowns(); // Reinitialize dropdown trees on clear reset
 
       } catch(error) {
         // Handle runtime/network issues seamlessly
